@@ -17,7 +17,7 @@
       }
       var getStatus = function(position) {
         var coord = position.coords.latitude + ',' + position.coords.longitude;
-        ajaxUrl = 'brohowstheweather.herokuapp.com/at/' + coord;
+        ajaxUrl = 'at/' + coord;
         $.ajax({
           type: 'GET',
           url: ajaxUrl,
