@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <title>Bro Weather Report</title>
+  <style type="text/css">
+    div {
+      text-align: center;
+      margin-top: 2em;
+      font-size: 5em;
+    }
+  </style>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+  <script>
+    function getAnswer() {
+      if(!navigator){
+        return $('div').html('<h1>Location Unavailable</h1>');
+      }
+      var getStatus = function(position) {
+        var coord = position.coords.latitude + ',' + position.coords.longitude;
+        ajaxUrl = 'brohowstheweather.herokuapp.com/at/' + coord;
+        $.ajax({
+          type: 'GET',
+          url: ajaxUrl,
+          success: function(data) {
+            console.log(data);
+            if(data.temp >= 80) {
+              $('div').html('sick day bro, go outside');
+            } else if(data.temp > 60) {
+              $('div').html('not bad bro, nothing to worry about');
+            } else if(data.temp > 40) {
+              $('div').html('bro it\'s a little chilly, don\'t wear a tank');
+            } else if(data.temp >20) {
+              $('div').html('it\'s pretty cold bro');
+            } else {
+              $('div').html('coldest day of my life bro');
+            }
+          }
+        });
+      };
+      navigator.geolocation.getCurrentPosition(getStatus);
+    };
+    getAnswer();
+  </script>
+</head>
+<body>
+  <div id="answer">Hm...</div>
+</body>
